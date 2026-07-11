@@ -2,16 +2,10 @@
   "name": "react-native-ui",
   "version": "0.1.0",
   "description": "Shared cross-platform UI components",
-  "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
-  "exports": {
-    ".": {
-      "react-native-ui-source": "./src/index.tsx",
-      "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
-    },
-    "./package.json": "./package.json"
-  },
+  "main": "./src/index.tsx",
+  "source": "./src/index.tsx",
+  "react-native": "./src/index.tsx",
+  "types": "./src/index.tsx",
   "files": [
     "src",
     "lib",
@@ -32,8 +26,6 @@
     "!**/.*"
   ],
   "scripts": {
-    "clean": "del-cli android/build lib",
-    "prepare": "bob build",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest"

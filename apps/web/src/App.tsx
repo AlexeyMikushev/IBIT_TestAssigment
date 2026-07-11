@@ -1,5 +1,7 @@
+import { MessagesScreen } from 'react-native-ui'
+
 function App() {
-  return null
+  return <MessagesScreen />
 }
 
 export default App
