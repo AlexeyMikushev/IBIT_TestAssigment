@@ -1,4 +1,6 @@
 export { MessagesScreen } from './MessagesScreen';
+export { Avatar } from './Avatar';
+export { getInitials } from './Avatar/getInitials';
 export { Header } from './Header';
 export { ItemList } from './ItemList';
 export { ListItem } from './ListItem';

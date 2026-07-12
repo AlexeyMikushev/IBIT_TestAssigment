@@ -28,4 +28,7 @@ export default defineConfig({
     __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
     global: 'globalThis',
   },
+  optimizeDeps: {
+    exclude: ['react-native-gesture-handler', 'react-native-reanimated'],
+  },
 })
