@@ -8,37 +8,39 @@ import { DELETE_LABEL } from './constants';
 type Props = {
   children: ReactNode;
   onDelete: () => void;
+  interactive?: boolean;
 };
 
-export function SwipeableRow({ children, onDelete }: Props) {
+export function SwipeableRow({
+  children,
+  onDelete,
+  interactive = true,
+}: Props) {
   const {
     wrapperRef,
     foregroundRef,
     wrapperStyle,
     backgroundStyle,
     foregroundStyle,
-    handleLayout,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
-  } = useSwipeableRow({ onDelete });
+  } = useSwipeableRow({ onDelete, interactive });
 
   return (
-    <View
-      ref={wrapperRef}
-      style={[styles.wrapper, wrapperStyle]}
-      onLayout={handleLayout}
-    >
-      <View style={[styles.background, backgroundStyle]}>
-        <View style={styles.actionContent}>
-          <DeleteIcon />
-          <Text style={styles.actionText}>{DELETE_LABEL}</Text>
+    <View ref={wrapperRef} style={[styles.wrapper, wrapperStyle]}>
+      {interactive && (
+        <View style={[styles.background, backgroundStyle]}>
+          <View style={styles.actionContent}>
+            <DeleteIcon />
+            <Text style={styles.actionText}>{DELETE_LABEL}</Text>
+          </View>
+          <View style={styles.actionContent}>
+            <Text style={styles.actionText}>{DELETE_LABEL}</Text>
+            <DeleteIcon />
+          </View>
         </View>
-        <View style={styles.actionContent}>
-          <Text style={styles.actionText}>{DELETE_LABEL}</Text>
-          <DeleteIcon />
-        </View>
-      </View>
+      )}
       <View
         ref={foregroundRef}
         style={foregroundStyle}
@@ -48,6 +50,9 @@ export function SwipeableRow({ children, onDelete }: Props) {
         onPointerCancel={handlePointerUp}
       >
         {children}
+        {!interactive && (
+          <View style={styles.inactiveTint} pointerEvents="none" />
+        )}
       </View>
     </View>
   );

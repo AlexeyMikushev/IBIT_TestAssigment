@@ -40,6 +40,14 @@ function randomWord(): string {
   return capitalize(pick(LOREM_WORDS, index));
 }
 
+function hash(input: string): string {
+  let value = 0;
+  for (let i = 0; i < input.length; i++) {
+    value = (value * 31 + input.charCodeAt(i)) | 0;
+  }
+  return Math.abs(value).toString(36);
+}
+
 export function generateMockData(count: number): ListItemData[] {
   const items: ListItemData[] = [];
 
@@ -51,13 +59,17 @@ export function generateMockData(count: number): ListItemData[] {
     const bucket = i % 10;
     let avatarUrl: string | undefined;
     if (bucket < 3) {
-      avatarUrl = `https://i.pravatar.cc/150?u=${i}`;
+      avatarUrl = `https://i.pravatar.cc/96?u=${i}`;
     } else if (bucket < 4) {
       avatarUrl = `https://broken.invalid/${i}.png`;
     }
 
+    const id = `${hash(
+      `${avatarUrl ?? ''}|${firstName}|${lastName}|${i}`
+    )}-${i}`;
+
     items.push({
-      id: String(i + 1),
+      id,
       name: `${firstName} ${lastName}`,
       text: LOREM,
       color,

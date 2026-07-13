@@ -22,4 +22,8 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 15,
   },
+  inactiveTint: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(15, 23, 42, 0.035)',
+  },
 });

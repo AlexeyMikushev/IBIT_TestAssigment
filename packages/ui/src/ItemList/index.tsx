@@ -1,61 +1,64 @@
-import { memo, useCallback } from 'react';
-import { FlatList } from 'react-native';
+import { useCallback, useRef } from 'react';
+import { FlatList, Platform } from 'react-native';
 import type { ListItemData } from '../data/mockData';
 import { useListStore } from '../store/useListStore';
-import { ListItem } from '../ListItem';
-import { SwipeableRow } from '../SwipeableRow';
+import { Row } from './Row';
+import { getItemLayout, keyExtractor } from './utils';
+import { useVirtualizedReveal } from './useVirtualizedReveal';
 import { styles } from './styles';
-
-const ROW_HEIGHT = 81;
-
-function keyExtractor(item: ListItemData) {
-  return item.id;
-}
-
-function getItemLayout(
-  _data: ArrayLike<ListItemData> | null | undefined,
-  index: number
-) {
-  return { length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index };
-}
-
-type RowProps = {
-  item: ListItemData;
-  onDelete: (id: string) => void;
-};
-
-function RowComponent({ item, onDelete }: RowProps) {
-  const handleDelete = () => onDelete(item.id);
-  return (
-    <SwipeableRow onDelete={handleDelete}>
-      <ListItem item={item} />
-    </SwipeableRow>
-  );
-}
-
-const Row = memo(RowComponent);
 
 export function ItemList() {
   const items = useListStore((state) => state.items);
   const removeItem = useListStore((state) => state.removeItem);
 
+  const listRef = useRef<FlatList<ListItemData>>(null);
+
+  const {
+    version,
+    isScrolling,
+    isRevealed,
+    isPromoted,
+    onScroll,
+    onScrollBeginDrag,
+    onMomentumScrollBegin,
+    onScrollSettle,
+    onLayout,
+  } = useVirtualizedReveal(items);
+
   const renderItem = useCallback(
     ({ item }: { item: ListItemData }) => (
-      <Row item={item} onDelete={removeItem} />
+      <Row
+        item={item}
+        onDelete={removeItem}
+        revealed={isRevealed(item.id)}
+        promoted={isPromoted(item.id)}
+        interactive={!isScrolling}
+      />
     ),
-    [removeItem]
+    [removeItem, isScrolling, isRevealed, isPromoted]
   );
 
   return (
     <FlatList
+      ref={listRef}
       style={styles.list}
       data={items}
+      extraData={version}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      onLayout={onLayout}
+      onScroll={onScroll}
+      onScrollBeginDrag={onScrollBeginDrag}
+      onMomentumScrollBegin={onMomentumScrollBegin}
+      onMomentumScrollEnd={onScrollSettle}
+      onScrollEndDrag={onScrollSettle}
+      scrollEventThrottle={32}
+      decelerationRate={Platform.OS === 'android' ? 0.6 : 'fast'}
       getItemLayout={getItemLayout}
       initialNumToRender={12}
-      maxToRenderPerBatch={12}
-      windowSize={7}
+      maxToRenderPerBatch={10}
+      windowSize={15}
+      removeClippedSubviews
     />
   );
 }

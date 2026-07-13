@@ -3,6 +3,8 @@ import { View, Image, Text } from 'react-native';
 import { getInitials } from './getInitials';
 import { styles } from './styles';
 
+const loadedUris = new Set<string>();
+
 type Props = {
   name: string;
   color: string;
@@ -12,9 +14,17 @@ type Props = {
 
 export function Avatar({ name, color, uri, size = 48 }: Props) {
   const [errored, setErrored] = useState(false);
+  const [loaded, setLoaded] = useState(() => !!uri && loadedUris.has(uri));
 
   const handleError = () => {
     setErrored(true);
+  };
+
+  const handleLoad = () => {
+    if (uri) {
+      loadedUris.add(uri);
+    }
+    setLoaded(true);
   };
 
   const dimension = {
@@ -27,13 +37,21 @@ export function Avatar({ name, color, uri, size = 48 }: Props) {
 
   const showImage = !!uri && !errored;
 
-  return showImage ? (
-    <Image
-      source={{ uri }}
-      style={[styles.image, dimension]}
-      onError={handleError}
-    />
-  ) : (
+  if (showImage) {
+    return (
+      <View style={[styles.imageContainer, dimension]}>
+        <Image
+          source={{ uri }}
+          style={[styles.image, dimension, !loaded && styles.hidden]}
+          onLoad={handleLoad}
+          onError={handleError}
+        />
+        {!loaded && <View style={[styles.skeleton, dimension]} />}
+      </View>
+    );
+  }
+
+  return (
     <View style={[styles.fallback, dimension, { backgroundColor: color }]}>
       <Text style={[styles.initials, { fontSize }]}>{getInitials(name)}</Text>
     </View>

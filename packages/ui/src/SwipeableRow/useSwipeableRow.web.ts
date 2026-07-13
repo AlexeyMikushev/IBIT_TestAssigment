@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ComponentRef, RefObject } from 'react';
-import type {
-  LayoutChangeEvent,
-  PointerEvent,
-  View as RNView,
-  ViewStyle,
-} from 'react-native';
+import type { PointerEvent, View as RNView, ViewStyle } from 'react-native';
 
 type RNViewRef = ComponentRef<typeof RNView>;
+import { ROW_HEIGHT } from '../ListItem/constants';
 import {
   SWIPE_THRESHOLD,
   SWIPE_DURATION,
@@ -29,6 +25,7 @@ type WebOnlyViewStyle = {
 
 type UseSwipeableRowParams = {
   onDelete: () => void;
+  interactive: boolean;
 };
 
 function transitionStyle(property: string, duration: number): WebOnlyViewStyle {
@@ -43,10 +40,12 @@ function asHTMLElement(ref: RefObject<RNViewRef | null>) {
   return ref.current as unknown as HTMLElement | null;
 }
 
-export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
+export function useSwipeableRow({
+  onDelete,
+  interactive,
+}: UseSwipeableRowParams) {
   const [translateX, setTranslateX] = useState(0);
   const [phase, setPhase] = useState<Phase>('idle');
-  const [height, setHeight] = useState<number | undefined>(undefined);
 
   const translateXRef = useRef(0);
   const dragStartXRef = useRef(0);
@@ -60,6 +59,7 @@ export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
   };
 
   const handlePointerDown = (event: PointerEvent) => {
+    if (!interactive) return;
     if (typeof event.currentTarget === 'number') return;
     event.currentTarget.setPointerCapture(event.nativeEvent.pointerId);
     dragStartXRef.current = event.nativeEvent.clientX - translateX;
@@ -110,17 +110,11 @@ export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
       node.removeEventListener('transitionend', handleCollapseTransitionEnd);
   }, [phase, onDelete]);
 
-  const handleLayout = (event: LayoutChangeEvent) => {
-    if (height === undefined) {
-      setHeight(event.nativeEvent.layout.height);
-    }
-  };
-
   const backgroundOpacity =
     0.5 + Math.min(Math.abs(translateX) / SWIPE_THRESHOLD, 1) * 0.5;
 
   const wrapperStyle = {
-    height: phase === 'collapsing' ? 0 : height,
+    height: phase === 'collapsing' ? 0 : ROW_HEIGHT,
     opacity: phase === 'collapsing' ? 0 : 1,
     ...transitionStyle('height, opacity', COLLAPSE_DURATION),
   } satisfies ViewStyle & WebOnlyViewStyle;
@@ -143,7 +137,6 @@ export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
     wrapperStyle,
     backgroundStyle,
     foregroundStyle,
-    handleLayout,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,

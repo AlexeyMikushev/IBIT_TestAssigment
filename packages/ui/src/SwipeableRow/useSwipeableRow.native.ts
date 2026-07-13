@@ -1,4 +1,4 @@
-import { useWindowDimensions, type LayoutChangeEvent } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import {
   usePanGesture,
   type PanGestureActiveEvent,
@@ -14,6 +14,7 @@ import {
   type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import { ROW_HEIGHT } from '../ListItem/constants';
 import {
   SWIPE_THRESHOLD,
   SWIPE_DURATION,
@@ -25,6 +26,7 @@ const swipeEasing = Easing.bezier(...SWIPE_EASING_BEZIER);
 
 type UseSwipeableRowParams = {
   onDelete: () => void;
+  interactive: boolean;
 };
 
 function useActionStyle(translateX: SharedValue<number>, sign: 1 | -1) {
@@ -46,10 +48,13 @@ function useActionStyle(translateX: SharedValue<number>, sign: 1 | -1) {
   );
 }
 
-export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
+export function useSwipeableRow({
+  onDelete,
+  interactive,
+}: UseSwipeableRowParams) {
   const { width } = useWindowDimensions();
   const translateX = useSharedValue(0);
-  const height = useSharedValue<number | undefined>(undefined);
+  const height = useSharedValue(ROW_HEIGHT);
 
   const handlePanUpdate = (event: PanGestureActiveEvent) => {
     'worklet';
@@ -83,6 +88,7 @@ export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
   };
 
   const pan = usePanGesture({
+    enabled: interactive,
     activeOffsetX: [-10, 10],
     onUpdate: handlePanUpdate,
     onDeactivate: handlePanDeactivate,
@@ -101,18 +107,11 @@ export function useSwipeableRow({ onDelete }: UseSwipeableRowParams) {
   const leftActionStyle = useActionStyle(translateX, 1);
   const rightActionStyle = useActionStyle(translateX, -1);
 
-  const handleLayout = (event: LayoutChangeEvent) => {
-    if (height.value === undefined) {
-      height.value = event.nativeEvent.layout.height;
-    }
-  };
-
   return {
     pan,
     wrapperStyle,
     foregroundStyle,
     leftActionStyle,
     rightActionStyle,
-    handleLayout,
   };
 }
