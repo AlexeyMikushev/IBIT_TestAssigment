@@ -1,23 +1,22 @@
-import { StyleSheet } from 'react-native';
-import { FONT_LIGHT } from '../typography';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   header: {
     paddingHorizontal: 24,
     paddingVertical: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colorWhite,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: theme.colorBorder,
   },
   title: {
-    fontFamily: FONT_LIGHT,
-    fontSize: 24,
-    color: '#111827',
+    fontFamily: theme.fontFamilyLight,
+    fontSize: theme.fontSizeLg,
+    color: theme.colorTextPrimary,
   },
   subtitle: {
-    fontFamily: FONT_LIGHT,
-    fontSize: 14,
-    color: '#6b7280',
+    fontFamily: theme.fontFamilyLight,
+    fontSize: theme.fontSizeSm,
+    color: theme.colorTextSecondary,
     marginTop: 2,
   },
-});
+}));

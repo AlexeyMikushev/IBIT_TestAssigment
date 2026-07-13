@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { styles } from './styles';
+import { useStyles } from './styles';
 import { useSwipeableRow } from './useSwipeableRow.native';
 import { DeleteIcon } from '../DeleteIcon';
 import { DELETE_LABEL } from './constants';
@@ -18,6 +18,7 @@ export function SwipeableRow({
   onDelete,
   interactive = true,
 }: Props) {
+  const styles = useStyles();
   const {
     pan,
     wrapperStyle,

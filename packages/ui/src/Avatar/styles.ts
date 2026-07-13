@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { FONT_LIGHT } from '../typography';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   imageContainer: {
     overflow: 'hidden',
   },
@@ -13,14 +12,14 @@ export const styles = StyleSheet.create({
   },
   skeleton: {
     position: 'absolute',
-    backgroundColor: '#e5e7eb',
+    backgroundColor: theme.colorSkeleton,
   },
   fallback: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   initials: {
-    color: '#ffffff',
-    fontFamily: FONT_LIGHT,
+    color: theme.colorWhite,
+    fontFamily: theme.fontFamilyLight,
   },
-});
+}));

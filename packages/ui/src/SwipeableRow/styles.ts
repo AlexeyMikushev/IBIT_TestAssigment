@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { FONT_BOLD } from '../typography';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   wrapper: {
     overflow: 'hidden',
   },
   background: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: '#ef4444',
+    backgroundColor: theme.colorDanger,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -19,12 +19,12 @@ export const styles = StyleSheet.create({
     gap: 6,
   },
   actionText: {
-    color: '#ffffff',
-    fontFamily: FONT_BOLD,
-    fontSize: 15,
+    color: theme.colorWhite,
+    fontFamily: theme.fontFamilyBold,
+    fontSize: theme.fontSizeBase,
   },
   inactiveTint: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(15, 23, 42, 0.035)',
+    backgroundColor: theme.colorOverlay,
   },
-});
+}));

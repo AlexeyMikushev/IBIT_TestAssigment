@@ -1,22 +1,23 @@
 import { StyleSheet } from 'react-native';
 import { ROW_HEIGHT } from '../ListItem/constants';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   row: {
     height: ROW_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colorWhite,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: theme.colorBorder,
   },
   avatar: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: theme.colorSkeleton,
   },
   content: {
     flex: 1,
@@ -26,16 +27,16 @@ export const styles = StyleSheet.create({
     height: 14,
     width: '40%',
     borderRadius: 4,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: theme.colorSkeleton,
   },
   textBar: {
     height: 12,
     width: '70%',
     borderRadius: 4,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: theme.colorSkeleton,
   },
   inactiveTint: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(15, 23, 42, 0.035)',
+    backgroundColor: theme.colorOverlay,
   },
-});
+}));

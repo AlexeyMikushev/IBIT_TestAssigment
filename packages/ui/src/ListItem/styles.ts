@@ -1,28 +1,27 @@
-import { StyleSheet } from 'react-native';
-import { FONT_BOLD, FONT_LIGHT } from '../typography';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colorWhite,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: theme.colorBorder,
   },
   content: {
     flex: 1,
   },
   name: {
-    fontFamily: FONT_BOLD,
-    fontSize: 16,
-    color: '#111827',
+    fontFamily: theme.fontFamilyBold,
+    fontSize: theme.fontSizeMd,
+    color: theme.colorTextPrimary,
     marginBottom: 2,
   },
   text: {
-    fontFamily: FONT_LIGHT,
-    fontSize: 14,
-    color: '#6b7280',
+    fontFamily: theme.fontFamilyLight,
+    fontSize: theme.fontSizeSm,
+    color: theme.colorTextSecondary,
   },
-});
+}));

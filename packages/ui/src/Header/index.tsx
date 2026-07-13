@@ -1,7 +1,9 @@
 import { View, Text } from 'react-native';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
 export function Header() {
+  const styles = useStyles();
+
   return (
     <View style={styles.header}>
       <Text style={styles.title}>Messages</Text>

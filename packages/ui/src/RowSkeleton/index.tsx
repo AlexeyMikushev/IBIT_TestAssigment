@@ -1,7 +1,9 @@
 import { View } from 'react-native';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
 export function RowSkeleton() {
+  const styles = useStyles();
+
   return (
     <View style={styles.row}>
       <View style={styles.avatar} />

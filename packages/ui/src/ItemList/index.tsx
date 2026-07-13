@@ -5,9 +5,10 @@ import { useListStore } from '../store/useListStore';
 import { Row } from './Row';
 import { getItemLayout, keyExtractor } from './utils';
 import { useVirtualizedReveal } from './useVirtualizedReveal';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
 export function ItemList() {
+  const styles = useStyles();
   const items = useListStore((state) => state.items);
   const removeItem = useListStore((state) => state.removeItem);
 

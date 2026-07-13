@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { View, Text } from 'react-native';
-import { styles } from './styles';
+import { useStyles } from './styles';
 import { useSwipeableRow } from './useSwipeableRow.web';
 import { DeleteIcon } from '../DeleteIcon';
 import { DELETE_LABEL } from './constants';
@@ -16,6 +16,7 @@ export function SwipeableRow({
   onDelete,
   interactive = true,
 }: Props) {
+  const styles = useStyles();
   const {
     wrapperRef,
     foregroundRef,

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Image, Text } from 'react-native';
 import { getInitials } from './getInitials';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
 const loadedUris = new Set<string>();
 
@@ -13,6 +13,7 @@ type Props = {
 };
 
 export function Avatar({ name, color, uri, size = 48 }: Props) {
+  const styles = useStyles();
   const [errored, setErrored] = useState(false);
   const [loaded, setLoaded] = useState(() => !!uri && loadedUris.has(uri));
 

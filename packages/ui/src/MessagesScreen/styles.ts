@@ -1,15 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   outer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: theme.colorBorder,
   },
   inner: {
     flex: 1,
     width: '100%',
     maxWidth: 475,
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colorWhite,
   },
-});
+}));

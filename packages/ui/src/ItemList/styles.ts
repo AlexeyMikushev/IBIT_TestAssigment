@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { createStyles } from '../theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = createStyles((theme) => ({
   list: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: theme.colorBackground,
   },
-});
+}));

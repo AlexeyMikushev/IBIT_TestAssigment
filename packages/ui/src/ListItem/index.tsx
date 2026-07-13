@@ -1,13 +1,15 @@
 import { View, Text } from 'react-native';
 import type { ListItemData } from '../data/mockData';
 import { Avatar } from '../Avatar';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
 type Props = {
   item: ListItemData;
 };
 
 export function ListItem({ item }: Props) {
+  const styles = useStyles();
+
   return (
     <View style={styles.row}>
       <Avatar name={item.name} color={item.color} uri={item.avatarUrl} />
