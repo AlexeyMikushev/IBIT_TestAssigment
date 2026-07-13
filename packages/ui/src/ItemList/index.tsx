@@ -1,13 +1,22 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 import { FlatList } from 'react-native';
-import { MOCK_DATA } from '../data/mockData';
 import type { ListItemData } from '../data/mockData';
+import { useListStore } from '../store/useListStore';
 import { ListItem } from '../ListItem';
 import { SwipeableRow } from '../SwipeableRow';
 import { styles } from './styles';
 
+const ROW_HEIGHT = 81;
+
 function keyExtractor(item: ListItemData) {
   return item.id;
+}
+
+function getItemLayout(
+  _data: ArrayLike<ListItemData> | null | undefined,
+  index: number
+) {
+  return { length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index };
 }
 
 type RowProps = {
@@ -27,11 +36,8 @@ function RowComponent({ item, onDelete }: RowProps) {
 const Row = memo(RowComponent);
 
 export function ItemList() {
-  const [items, setItems] = useState(MOCK_DATA);
-
-  const removeItem = useCallback((id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+  const items = useListStore((state) => state.items);
+  const removeItem = useListStore((state) => state.removeItem);
 
   const renderItem = useCallback(
     ({ item }: { item: ListItemData }) => (
@@ -46,6 +52,10 @@ export function ItemList() {
       data={items}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      getItemLayout={getItemLayout}
+      initialNumToRender={12}
+      maxToRenderPerBatch={12}
+      windowSize={7}
     />
   );
 }

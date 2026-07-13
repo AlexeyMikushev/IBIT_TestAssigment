@@ -7,5 +7,4 @@ export { ListItem } from './ListItem';
 export { SwipeableRow } from './SwipeableRow';
 export { SvgIcon } from './SvgIcon';
 export type { SvgIconProps, SvgPathDef } from './SvgIcon';
-export { MOCK_DATA } from './data/mockData';
 export type { ListItemData } from './data/mockData';
