@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { FONT_LIGHT } from '../typography';
 
 export const styles = StyleSheet.create({
   imageContainer: {
@@ -20,6 +21,6 @@ export const styles = StyleSheet.create({
   },
   initials: {
     color: '#ffffff',
-    fontWeight: '600',
+    fontFamily: FONT_LIGHT,
   },
 });

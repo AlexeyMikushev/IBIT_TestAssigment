@@ -43,6 +43,7 @@ export function Avatar({ name, color, uri, size = 48 }: Props) {
         <Image
           source={{ uri }}
           style={[styles.image, dimension, !loaded && styles.hidden]}
+          fadeDuration={0}
           onLoad={handleLoad}
           onError={handleError}
         />

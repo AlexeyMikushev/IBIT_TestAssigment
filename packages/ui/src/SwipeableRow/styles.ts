@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { FONT_BOLD } from '../typography';
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
   },
   actionText: {
     color: '#ffffff',
-    fontWeight: '700',
+    fontFamily: FONT_BOLD,
     fontSize: 15,
   },
   inactiveTint: {

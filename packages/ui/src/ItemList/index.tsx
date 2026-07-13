@@ -31,8 +31,7 @@ export function ItemList() {
         item={item}
         onDelete={removeItem}
         revealed={isRevealed(item.id)}
-        promoted={isPromoted(item.id)}
-        interactive={!isScrolling}
+        swipeEnabled={isPromoted(item.id) && !isScrolling}
       />
     ),
     [removeItem, isScrolling, isRevealed, isPromoted]

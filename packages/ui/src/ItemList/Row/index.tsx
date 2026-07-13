@@ -8,24 +8,17 @@ type Props = {
   item: ListItemData;
   onDelete: (id: string) => void;
   revealed: boolean;
-  promoted: boolean;
-  interactive: boolean;
+  swipeEnabled: boolean;
 };
 
-function RowComponent({
-  item,
-  onDelete,
-  revealed,
-  promoted,
-  interactive,
-}: Props) {
+function RowComponent({ item, onDelete, revealed, swipeEnabled }: Props) {
   if (!revealed) {
     return <RowSkeleton />;
   }
 
   const handleDelete = () => onDelete(item.id);
   return (
-    <SwipeableRow onDelete={handleDelete} interactive={promoted && interactive}>
+    <SwipeableRow onDelete={handleDelete} interactive={swipeEnabled}>
       <ListItem item={item} />
     </SwipeableRow>
   );

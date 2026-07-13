@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { FONT_BOLD, FONT_LIGHT } from '../typography';
 
 export const styles = StyleSheet.create({
   row: {
@@ -14,12 +15,13 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
+    fontFamily: FONT_BOLD,
     fontSize: 16,
-    fontWeight: '600',
     color: '#111827',
     marginBottom: 2,
   },
   text: {
+    fontFamily: FONT_LIGHT,
     fontSize: 14,
     color: '#6b7280',
   },
