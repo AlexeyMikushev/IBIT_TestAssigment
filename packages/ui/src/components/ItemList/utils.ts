@@ -1,4 +1,4 @@
-import type { ListItemData } from '../data/mockData';
+import type { ListItemData } from '../../data/mockData';
 import { ROW_HEIGHT } from '../ListItem/constants';
 
 export function remember(map: Map<string, true>, id: string, limit: number) {

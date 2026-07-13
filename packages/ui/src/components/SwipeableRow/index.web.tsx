@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { useStyles } from './styles';
-import { useSwipeableRow } from './useSwipeableRow.web';
+import { useSwipeableRow } from '../../hooks/useSwipeableRow.web';
 import { DeleteIcon } from '../DeleteIcon';
 import { DELETE_LABEL } from './constants';
 

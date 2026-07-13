@@ -1,4 +1,4 @@
-import type { SvgIconProps } from '../../SvgIcon/types';
+import type { SvgIconProps } from '../../components/SvgIcon/types';
 
 export const DELETE_ICON: SvgIconProps = {
   width: 18,

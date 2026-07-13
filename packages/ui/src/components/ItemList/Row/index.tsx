@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { ListItemData } from '../../data/mockData';
+import type { ListItemData } from '../../../data/mockData';
 import { ListItem } from '../../ListItem';
 import { RowSkeleton } from '../../RowSkeleton';
 import { SwipeableRow } from '../../SwipeableRow';

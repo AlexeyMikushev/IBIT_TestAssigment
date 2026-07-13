@@ -3,13 +3,13 @@ import type { ComponentRef, RefObject } from 'react';
 import type { PointerEvent, View as RNView, ViewStyle } from 'react-native';
 
 type RNViewRef = ComponentRef<typeof RNView>;
-import { ROW_HEIGHT } from '../ListItem/constants';
+import { ROW_HEIGHT } from '../components/ListItem/constants';
 import {
   SWIPE_THRESHOLD,
   SWIPE_DURATION,
   COLLAPSE_DURATION,
   SWIPE_EASING_BEZIER,
-} from './constants';
+} from '../components/SwipeableRow/constants';
 
 const EASING = `cubic-bezier(${SWIPE_EASING_BEZIER.join(', ')})`;
 

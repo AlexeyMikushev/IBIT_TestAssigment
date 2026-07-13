@@ -1,4 +1,4 @@
-import { createStyles } from '../theme';
+import { createStyles } from '../../theme';
 
 export const useStyles = createStyles((theme) => ({
   row: {

@@ -1,9 +1,13 @@
 import { useCallback, useReducer, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import type { ListItemData } from '../data/mockData';
-import { ROW_HEIGHT } from '../ListItem/constants';
-import { MAX_PROMOTED, MAX_REVEALED, NEAR_BUFFER_ROWS } from './constants';
-import { remember } from './utils';
+import { ROW_HEIGHT } from '../components/ListItem/constants';
+import {
+  MAX_PROMOTED,
+  MAX_REVEALED,
+  NEAR_BUFFER_ROWS,
+} from '../components/ItemList/constants';
+import { remember } from '../components/ItemList/utils';
 
 export function useVirtualizedReveal(items: ListItemData[]) {
   const [isScrolling, setIsScrolling] = useState(false);

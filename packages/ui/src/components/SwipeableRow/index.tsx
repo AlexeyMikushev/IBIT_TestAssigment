@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useStyles } from './styles';
-import { useSwipeableRow } from './useSwipeableRow.native';
+import { useSwipeableRow } from '../../hooks/useSwipeableRow.native';
 import { DeleteIcon } from '../DeleteIcon';
 import { DELETE_LABEL } from './constants';
 

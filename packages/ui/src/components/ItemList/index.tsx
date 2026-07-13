@@ -1,10 +1,10 @@
 import { useCallback, useRef } from 'react';
 import { FlatList, Platform } from 'react-native';
-import type { ListItemData } from '../data/mockData';
-import { useListStore } from '../store/useListStore';
+import type { ListItemData } from '../../data/mockData';
+import { useListStore } from '../../store/useListStore';
 import { Row } from './Row';
 import { getItemLayout, keyExtractor } from './utils';
-import { useVirtualizedReveal } from './useVirtualizedReveal';
+import { useVirtualizedReveal } from '../../hooks/useVirtualizedReveal';
 import { useStyles } from './styles';
 
 export function ItemList() {

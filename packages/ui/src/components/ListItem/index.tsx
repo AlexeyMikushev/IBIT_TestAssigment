@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import type { ListItemData } from '../data/mockData';
+import type { ListItemData } from '../../data/mockData';
 import { Avatar } from '../Avatar';
 import { useStyles } from './styles';
 

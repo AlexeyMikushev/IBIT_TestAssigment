@@ -14,13 +14,13 @@ import {
   type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import { ROW_HEIGHT } from '../ListItem/constants';
+import { ROW_HEIGHT } from '../components/ListItem/constants';
 import {
   SWIPE_THRESHOLD,
   SWIPE_DURATION,
   COLLAPSE_DURATION,
   SWIPE_EASING_BEZIER,
-} from './constants';
+} from '../components/SwipeableRow/constants';
 
 const swipeEasing = Easing.bezier(...SWIPE_EASING_BEZIER);
 

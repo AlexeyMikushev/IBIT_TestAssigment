@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { ROW_HEIGHT } from '../ListItem/constants';
-import { createStyles } from '../theme';
+import { createStyles } from '../../theme';
 
 export const useStyles = createStyles((theme) => ({
   row: {
