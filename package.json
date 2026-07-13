@@ -7,7 +7,10 @@
   ],
   "scripts": {
     "web": "npm run dev --workspace=apps/web",
+    "preios": "node scripts/ensure-pods.js",
     "ios": "npm run ios --workspace=apps/mobile",
+    "pod-install": "cd apps/mobile/ios && bundle install && bundle exec pod install",
+    "preandroid": "node scripts/ensure-android-emulator.js",
     "android": "npm run android --workspace=apps/mobile"
   }
 }
