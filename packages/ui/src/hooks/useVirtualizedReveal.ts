@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import type { ListItemData } from '../data/mockData';
 import { ROW_HEIGHT } from '../components/ListItem/constants';
@@ -8,6 +8,7 @@ import {
   NEAR_BUFFER_ROWS,
   SCROLL_SETTLE_SPEED,
   SCROLL_RESUME_SPEED,
+  SCROLL_SETTLE_TIMEOUT,
 } from '../components/ItemList/constants';
 import { remember } from '../components/ItemList/utils';
 
@@ -26,6 +27,7 @@ export function useVirtualizedReveal(items: ListItemData[]) {
   const lastOffsetRef = useRef(0);
   const viewportHeightRef = useRef(0);
   const speedSampleRef = useRef<SpeedSample | null>(null);
+  const settleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateRanges = useCallback(
     (offset: number, scrolling: boolean) => {
@@ -83,6 +85,25 @@ export function useVirtualizedReveal(items: ListItemData[]) {
     return Math.abs(offset - previous.offset) / elapsedSeconds;
   }, []);
 
+  const clearSettleTimeout = useCallback(() => {
+    if (settleTimeoutRef.current !== null) {
+      clearTimeout(settleTimeoutRef.current);
+      settleTimeoutRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => clearSettleTimeout, [clearSettleTimeout]);
+
+  const settle = useCallback(
+    (offset: number) => {
+      clearSettleTimeout();
+      speedSampleRef.current = null;
+      setScrolling(false);
+      updateRanges(offset, false);
+    },
+    [clearSettleTimeout, setScrolling, updateRanges]
+  );
+
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = event.nativeEvent.contentOffset.y;
@@ -96,8 +117,15 @@ export function useVirtualizedReveal(items: ListItemData[]) {
         }
       }
       updateRanges(offset, isScrollingRef.current);
+      clearSettleTimeout();
+      if (isScrollingRef.current) {
+        settleTimeoutRef.current = setTimeout(() => {
+          settleTimeoutRef.current = null;
+          settle(lastOffsetRef.current);
+        }, SCROLL_SETTLE_TIMEOUT);
+      }
     },
-    [measureSpeed, setScrolling, updateRanges]
+    [measureSpeed, setScrolling, updateRanges, clearSettleTimeout, settle]
   );
 
   const onScrollBeginDrag = useCallback(() => {
@@ -113,11 +141,9 @@ export function useVirtualizedReveal(items: ListItemData[]) {
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = event.nativeEvent.contentOffset.y;
       lastOffsetRef.current = offset;
-      speedSampleRef.current = null;
-      setScrolling(false);
-      updateRanges(offset, false);
+      settle(offset);
     },
-    [setScrolling, updateRanges]
+    [settle]
   );
 
   const onLayout = useCallback(
