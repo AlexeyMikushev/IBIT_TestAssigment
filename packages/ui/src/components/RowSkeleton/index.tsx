@@ -11,7 +11,6 @@ export function RowSkeleton() {
         <View style={styles.nameBar} />
         <View style={styles.textBar} />
       </View>
-      <View style={styles.inactiveTint} pointerEvents="none" />
     </View>
   );
 }

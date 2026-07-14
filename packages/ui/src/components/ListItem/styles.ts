@@ -1,7 +1,9 @@
 import { createStyles } from '../../theme';
+import { ROW_HEIGHT } from './constants';
 
 export const useStyles = createStyles((theme) => ({
   row: {
+    height: ROW_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,

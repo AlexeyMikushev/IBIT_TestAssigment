@@ -51,9 +51,6 @@ export function SwipeableRow({
         onPointerCancel={handlePointerUp}
       >
         {children}
-        {!interactive && (
-          <View style={styles.inactiveTint} pointerEvents="none" />
-        )}
       </View>
     </View>
   );

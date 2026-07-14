@@ -104,12 +104,18 @@ export function useSwipeableRow({
     [translateX]
   );
 
+  const backgroundStyle = useAnimatedStyle(
+    () => ({ opacity: Math.abs(translateX.value) < 1 ? 0 : 1 }),
+    [translateX]
+  );
+
   const leftActionStyle = useActionStyle(translateX, 1);
   const rightActionStyle = useActionStyle(translateX, -1);
 
   return {
     pan,
     wrapperStyle,
+    backgroundStyle,
     foregroundStyle,
     leftActionStyle,
     rightActionStyle,

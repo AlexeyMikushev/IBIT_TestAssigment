@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { ROW_HEIGHT } from '../ListItem/constants';
 import { createStyles } from '../../theme';
 
@@ -34,9 +33,5 @@ export const useStyles = createStyles((theme) => ({
     width: '70%',
     borderRadius: 4,
     backgroundColor: theme.colorSkeleton,
-  },
-  inactiveTint: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: theme.colorOverlay,
   },
 }));

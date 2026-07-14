@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useStyles } from './styles';
@@ -22,6 +22,7 @@ export function SwipeableRow({
   const {
     pan,
     wrapperStyle,
+    backgroundStyle,
     foregroundStyle,
     leftActionStyle,
     rightActionStyle,
@@ -30,7 +31,7 @@ export function SwipeableRow({
   return (
     <Animated.View style={[styles.wrapper, wrapperStyle]}>
       {interactive && (
-        <Animated.View style={styles.background}>
+        <Animated.View style={[styles.background, backgroundStyle]}>
           <Animated.View style={[styles.actionContent, leftActionStyle]}>
             <DeleteIcon />
             <Text style={styles.actionText}>{DELETE_LABEL}</Text>
@@ -42,12 +43,7 @@ export function SwipeableRow({
         </Animated.View>
       )}
       <GestureDetector gesture={pan}>
-        <Animated.View style={foregroundStyle}>
-          {children}
-          {!interactive && (
-            <View style={styles.inactiveTint} pointerEvents="none" />
-          )}
-        </Animated.View>
+        <Animated.View style={foregroundStyle}>{children}</Animated.View>
       </GestureDetector>
     </Animated.View>
   );

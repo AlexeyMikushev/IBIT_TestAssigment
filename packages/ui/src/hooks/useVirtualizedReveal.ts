@@ -6,8 +6,15 @@ import {
   MAX_PROMOTED,
   MAX_REVEALED,
   NEAR_BUFFER_ROWS,
+  SCROLL_SETTLE_SPEED,
+  SCROLL_RESUME_SPEED,
 } from '../components/ItemList/constants';
 import { remember } from '../components/ItemList/utils';
+
+type SpeedSample = {
+  offset: number;
+  timestamp: number;
+};
 
 export function useVirtualizedReveal(items: ListItemData[]) {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -18,6 +25,7 @@ export function useVirtualizedReveal(items: ListItemData[]) {
   const isScrollingRef = useRef(false);
   const lastOffsetRef = useRef(0);
   const viewportHeightRef = useRef(0);
+  const speedSampleRef = useRef<SpeedSample | null>(null);
 
   const updateRanges = useCallback(
     (offset: number, scrolling: boolean) => {
@@ -65,16 +73,35 @@ export function useVirtualizedReveal(items: ListItemData[]) {
     setIsScrolling((prev) => (prev === value ? prev : value));
   }, []);
 
+  const measureSpeed = useCallback((offset: number, timestamp: number) => {
+    const previous = speedSampleRef.current;
+    speedSampleRef.current = { offset, timestamp };
+    if (!previous || timestamp <= previous.timestamp) {
+      return null;
+    }
+    const elapsedSeconds = (timestamp - previous.timestamp) / 1000;
+    return Math.abs(offset - previous.offset) / elapsedSeconds;
+  }, []);
+
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = event.nativeEvent.contentOffset.y;
       lastOffsetRef.current = offset;
+      const speed = measureSpeed(offset, event.timeStamp);
+      if (speed !== null) {
+        if (isScrollingRef.current && speed < SCROLL_SETTLE_SPEED) {
+          setScrolling(false);
+        } else if (!isScrollingRef.current && speed > SCROLL_RESUME_SPEED) {
+          setScrolling(true);
+        }
+      }
       updateRanges(offset, isScrollingRef.current);
     },
-    [updateRanges]
+    [measureSpeed, setScrolling, updateRanges]
   );
 
   const onScrollBeginDrag = useCallback(() => {
+    speedSampleRef.current = null;
     setScrolling(true);
   }, [setScrolling]);
 
@@ -86,6 +113,7 @@ export function useVirtualizedReveal(items: ListItemData[]) {
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = event.nativeEvent.contentOffset.y;
       lastOffsetRef.current = offset;
+      speedSampleRef.current = null;
       setScrolling(false);
       updateRanges(offset, false);
     },

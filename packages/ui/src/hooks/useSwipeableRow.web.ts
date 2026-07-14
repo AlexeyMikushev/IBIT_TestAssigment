@@ -111,7 +111,9 @@ export function useSwipeableRow({
   }, [phase, onDelete]);
 
   const backgroundOpacity =
-    0.5 + Math.min(Math.abs(translateX) / SWIPE_THRESHOLD, 1) * 0.5;
+    phase === 'idle'
+      ? 0
+      : 0.5 + Math.min(Math.abs(translateX) / SWIPE_THRESHOLD, 1) * 0.5;
 
   const wrapperStyle = {
     height: phase === 'collapsing' ? 0 : ROW_HEIGHT,

@@ -5,8 +5,7 @@ export const theme = {
   colorBackground: '#f9fafb',
   colorBorder: '#f3f4f6',
   colorSkeleton: '#e5e7eb',
-  colorDanger: '#ef4444',
-  colorOverlay: 'rgba(15, 23, 42, 0.035)',
+  colorSwipeBackground: '#ef4444',
 
   fontFamilyLight: 'Inter-Light',
   fontFamilyBold: 'Inter-Bold',

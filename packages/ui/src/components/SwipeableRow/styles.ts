@@ -7,7 +7,7 @@ export const useStyles = createStyles((theme) => ({
   },
   background: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: theme.colorDanger,
+    backgroundColor: theme.colorSwipeBackground,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -22,9 +22,5 @@ export const useStyles = createStyles((theme) => ({
     color: theme.colorWhite,
     fontFamily: theme.fontFamilyBold,
     fontSize: theme.fontSizeBase,
-  },
-  inactiveTint: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: theme.colorOverlay,
   },
 }));
