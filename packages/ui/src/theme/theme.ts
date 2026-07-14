@@ -6,6 +6,7 @@ export const theme = {
   colorBorder: '#f3f4f6',
   colorSkeleton: '#e5e7eb',
   colorSwipeBackground: '#ef4444',
+  colorAccent: '#3b82f6',
 
   fontFamilyLight: 'Inter-Light',
   fontFamilyBold: 'Inter-Bold',

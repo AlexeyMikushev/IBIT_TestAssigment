@@ -5,12 +5,14 @@ import { useListStore } from '../../store/useListStore';
 import { Row } from './Row';
 import { getItemLayout, keyExtractor } from './utils';
 import { useVirtualizedReveal } from '../../hooks/useVirtualizedReveal';
+import { EmptyState } from '../EmptyState';
 import { useStyles } from './styles';
 
 export function ItemList() {
   const styles = useStyles();
   const items = useListStore((state) => state.items);
   const removeItem = useListStore((state) => state.removeItem);
+  const reset = useListStore((state) => state.reset);
 
   const listRef = useRef<FlatList<ListItemData>>(null);
 
@@ -37,6 +39,10 @@ export function ItemList() {
     ),
     [removeItem, isScrolling, isRevealed, isPromoted]
   );
+
+  if (items.length === 0) {
+    return <EmptyState onReset={reset} />;
+  }
 
   return (
     <FlatList

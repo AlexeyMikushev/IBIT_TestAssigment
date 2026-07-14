@@ -4,6 +4,7 @@ export { getInitials } from './components/Avatar/getInitials';
 export { Header } from './components/Header';
 export { ItemList } from './components/ItemList';
 export { ListItem } from './components/ListItem';
+export { EmptyState } from './components/EmptyState';
 export { SwipeableRow } from './components/SwipeableRow';
 export { SvgIcon } from './components/SvgIcon';
 export type { SvgIconProps, SvgPathDef } from './components/SvgIcon';
